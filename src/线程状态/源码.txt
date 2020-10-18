@@ -1,0 +1,21 @@
+// Thread.getState⽅法源码：
+public State getState() {
+ // get current thread state
+ return sun.misc.VM.toThreadState(threadStatus);
+}
+// sun.misc.VM 源码：
+public static State toThreadState(int var0) {
+ if ((var0 & 4) != 0) {
+ return State.RUNNABLE;
+ } else if ((var0 & 1024) != 0) {
+ return State.BLOCKED;
+ } else if ((var0 & 16) != 0) {
+ return State.WAITING;
+ } else if ((var0 & 32) != 0) {
+ return State.TIMED_WAITING;
+ } else if ((var0 & 2) != 0) {
+ return State.TERMINATED;
+ } else {
+ return (var0 & 1) == 0 ? State.NEW : State.RUNNABLE;
+ }
+}
